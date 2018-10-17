@@ -1,4 +1,4 @@
-# Docker with pg_statsinfo
+# PostgreSQL with pg_statsinfo Docker
 
 PostgreSQL Docker image with pg_statsinfo installed.
 
