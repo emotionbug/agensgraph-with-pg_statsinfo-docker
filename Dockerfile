@@ -25,4 +25,4 @@ RUN set -ex \
     && make USE_PGXS=1 \
     && make install
 
-CMD ["postgres", "-c", "'shared_preload_libraries=pg_statsinfo'"]
+CMD ["postgres", "-c", "shared_preload_libraries=pg_statsinfo"]
