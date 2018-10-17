@@ -14,10 +14,9 @@ RUN set -ex \
     && ln -s /usr/lib/postgresql/9.6/lib/libpgport.a \
 	&& rm -rf /var/lib/apt/lists/*
 
-ADD https://astuteinternet.dl.sourceforge.net/project/pgstatsinfo/pg_statsinfo/3.3.0/pg_statsinfo-3.3.0.tar.gz /usr/local/src/
-
 RUN set -ex \
 	&& cd /usr/local/src/ \
+    && curl -O https://astuteinternet.dl.sourceforge.net/project/pgstatsinfo/pg_statsinfo/3.3.0/pg_statsinfo-3.3.0.tar.gz \
     && tar xvf pg_statsinfo-3.3.0.tar.gz \
     && rm -rf pg_statsinfo-3.3.0.tar.gz \
     && cd pg_statsinfo-3.3.0 \
