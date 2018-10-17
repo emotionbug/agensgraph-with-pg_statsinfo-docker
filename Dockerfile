@@ -3,6 +3,7 @@ FROM postgres:9.6
 RUN set -ex \
 	&& apt-get update && apt-get install -y --no-install-recommends --allow-downgrades \
 		build-essential \
+        curl \
         libpq-dev=9.6.* \
         libpq5=9.6.* \
         postgresql-server-dev-9.6 \
