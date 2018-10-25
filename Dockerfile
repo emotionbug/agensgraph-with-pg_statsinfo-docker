@@ -11,13 +11,15 @@ RUN set -ex \
 
 RUN set -ex \
 	&& cd /usr/local/src/ \
-    && curl -O https://astuteinternet.dl.sourceforge.net/project/pgstatsinfo/pg_statsinfo/3.3.0/pg_statsinfo-3.3.0.tar.gz \
-    && curl -O https://raw.githubusercontent.com/takumaw/pg_statsinfo-3.3.0/master/pg_statsinfo-3.3.0-patch.diff \
+    && curl -sSL -O https://astuteinternet.dl.sourceforge.net/project/pgstatsinfo/pg_statsinfo/3.3.0/pg_statsinfo-3.3.0.tar.gz \
+    && curl -sSL -O https://raw.githubusercontent.com/takumaw/pg_statsinfo-3.3.0/master/pg_statsinfo-3.3.0-patch.diff \
     && tar xvf pg_statsinfo-3.3.0.tar.gz \
     && rm -rf pg_statsinfo-3.3.0.tar.gz \
     && cd pg_statsinfo-3.3.0 \
     && patch -u -p 1 < ../pg_statsinfo-3.3.0-patch.diff \
     && make USE_PGXS=1 \
-    && make install
+    && make USE_PGXS=1 install
 
-CMD ["postgres", "-c", "shared_preload_libraries=pg_statsinfo"]
+COPY docker-entrypoint-initdb.d/00-create-extension-pg_stat_statements.sql /docker-entrypoint-initdb.d/00-create-extension-pg_stat_statements.sql
+
+CMD ["postgres", "-c", "shared_preload_libraries=pg_statsinfo,pg_stat_statements"]
