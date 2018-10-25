@@ -20,6 +20,16 @@ RUN set -ex \
     && make USE_PGXS=1 \
     && make USE_PGXS=1 install
 
-COPY docker-entrypoint-initdb.d/00-create-extension-pg_stat_statements.sql /docker-entrypoint-initdb.d/00-create-extension-pg_stat_statements.sql
+RUN set -ex \
+    && cd /usr/local/src/ \
+    && curl -sSL -O https://jaist.dl.osdn.jp/pgstoreplans/66867/pg_store_plans96-1.1.tar.gz \
+    && tar xvf pg_store_plans96-1.1.tar.gz \
+    && rm -rf pg_store_plans96-1.1.tar.gz \
+    && cd pg_store_plans96-1.1 \
+    && make USE_PGXS=1 \
+    && make USE_PGXS=1 install
 
-CMD ["postgres", "-c", "shared_preload_libraries=pg_statsinfo,pg_stat_statements"]
+COPY docker-entrypoint-initdb.d/00-create-extension-pg_stat_statements.sql /docker-entrypoint-initdb.d/00-create-extension-pg_stat_statements.sql
+COPY docker-entrypoint-initdb.d/01-create-extension-pg_store_plans.sql /docker-entrypoint-initdb.d/01-create-extension-pg_store_plans.sql
+
+CMD ["postgres", "-c", "shared_preload_libraries=pg_statsinfo,pg_stat_statements,pg_store_plans"]
