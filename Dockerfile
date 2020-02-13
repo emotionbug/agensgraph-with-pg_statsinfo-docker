@@ -1,4 +1,4 @@
-FROM postgres:10.8
+FROM postgres:10.9
 
 RUN set -ex \
 	&& apt-get update && apt-get install -y --no-install-recommends --allow-downgrades \
