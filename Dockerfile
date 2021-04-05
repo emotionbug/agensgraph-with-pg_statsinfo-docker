@@ -18,7 +18,7 @@ RUN set -eux; \
     rm -rf pg_statsinfo-10.0.tar.gz; \
     cd pg_statsinfo-10.0; \
     patch -u -p 1 < ../pg_statsinfo-10.0-patch.diff; \
-    rm -rf pg_statsinfo-10.0-patch.diff; \
+    rm -rf ../pg_statsinfo-10.0-patch.diff; \
     make USE_PGXS=1; \
     make USE_PGXS=1 install; \
     cd ..; \
